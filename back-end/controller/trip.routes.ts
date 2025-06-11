@@ -75,6 +75,12 @@ const tripRouter = express.Router();
  *                   example: "Database error. See server log for details."
  */
 tripRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const trips = await tripService.getAllTrips();
+        res.status(200).json(trips);
+    } catch (error) {
+        next(error);
+    }
 });
 
 /**
@@ -118,6 +124,13 @@ tripRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
  *         description: Internal server error
  */
 tripRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = Number(req.params.id);
+        const trip = await tripService.getTripById({id});
+        res.status(200).json(trip);
+    } catch (error) {
+        next(error);
+    }
 });
 
 export { tripRouter };
