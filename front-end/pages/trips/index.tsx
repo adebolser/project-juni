@@ -32,7 +32,7 @@ const Trips: React.FC = () => {
               <div className="grid gap-4">
                 {" "}
                 {[].map((trip) => (
-                  <div key={} className="p-4 border rounded-lg">
+                  <div key={""} className="p-4 border rounded-lg">
                     <h3 className="font-bold text-lg">🏖️ {}</h3>
                     <p className="text-gray-600 mb-2">{}</p>
                     <p className="text-sm">

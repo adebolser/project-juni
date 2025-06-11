@@ -64,7 +64,7 @@ $ npx prisma generate
 Optionally, you can execute the seed script to fill the database with test data:
 
 ```console
-$ npx ts-node seed.ts
+$ npx ts-node util/seed.ts
 ```
 
 To start the Node.js server execute:
