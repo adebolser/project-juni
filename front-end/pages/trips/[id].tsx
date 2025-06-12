@@ -14,7 +14,26 @@ const TripDetail: React.FC = () => {
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
 
-  const getTrip = async () =>{}
+  const getTrip = async () =>{
+    setError("");
+    setLoading(true);
+
+    const tripId = id as string;
+    const response = await TripService.getTripById(tripId);
+    
+    setLoading(false);
+
+    if (response.ok) {
+      const holidayTripData = await response.json();
+      setTrip(holidayTripData);
+    } else {
+      setError(response.statusText);
+    }
+  }
+
+  useEffect(() => {
+    getTrip();
+  }, []);
 
   if (loading) {
     return (
@@ -86,7 +105,7 @@ const TripDetail: React.FC = () => {
           </Link>
 
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <h1 className="text-3xl font-bold mb-4">🏖️ {}</h1>
+            <h1 className="text-3xl font-bold mb-4">🏖️ {trip.destination}</h1>
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
@@ -147,17 +166,17 @@ const TripDetail: React.FC = () => {
               <h2 className="text-xl font-semibold mb-3">
                 Attendees ({trip.attendees?.length || 0})
               </h2>
-              {false && (
+              {trip && (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {[].map((attendee, index) => (
+                  {trip.attendees.map((attendee, index) => (
                     <div
                       key={index}
                       className="bg-gray-100 rounded-lg p-3"
                     >
                       <p className="font-medium">
-                        {}
+                        {attendee.firstName + " " + attendee.lastName}
                       </p>
-                      <p className="text-sm text-gray-600">{}</p>
+                      <p className="text-sm text-gray-600">{attendee.email}</p>
                     </div>
                   ))}
                 </div>
