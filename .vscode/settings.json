@@ -1,0 +1,4 @@
+{
+  "jest.jestCommandLine": "npm test --",
+  "jest.rootPath": "/Users/anndebolster/Develop/Full Stack SW Development/project-juni/back-end"
+}
