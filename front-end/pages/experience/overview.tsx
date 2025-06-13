@@ -85,7 +85,8 @@ const Experiences: React.FC = () => {
                 You need to be logged in to view travel experiences. Please log
                 in to discover amazing experiences and events!
               </p>
-              <a className="bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 inline-block">
+              <a href="/login"
+              className="bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 inline-block">
                 Go to Login
               </a>
             </div>
@@ -98,7 +99,7 @@ const Experiences: React.FC = () => {
                 <CreateExperienceForm
                   />
               </div> */}
-          {loggedInUser && (
+          {loggedInUser && loggedInUser.role === "ORGANISER" && (
             <div className="mt-4 mb-4 flex gap-3">
               <button
                 // onClick={}
@@ -120,21 +121,21 @@ const Experiences: React.FC = () => {
             {experiences && (
               <div className="mt-4">
                 <h2 className="text-xl font-semibold mb-4">
-                  {"Available Experiences"} ()
+                  {"Available Experiences"} ({experiences.length})
                 </h2>
                 <div className="grid gap-4">
-                  {[].map((experience) => (
+                  {experiences.map((experience) => (
                     <div
                       // key={}
                       className="p-4 border rounded-lg"
                     >
-                      <h3 className="font-bold">{}</h3>
-                      <p className="text-gray-600">{}</p>
-                      <p className="text-sm">📍 {}</p>
+                      <h3 className="font-bold">{experience.name}</h3>
+                      <p className="text-gray-600">{experience.description}</p>
+                      <p className="text-sm">📍 {experience.location}</p>
                       <p className="text-sm">
-                        📅 {new Date().toLocaleDateString()}
+                        📅 {new Date(experience.date).toLocaleDateString()}
                       </p>
-                      <p className="text-sm">👤 Organiser: {}</p>
+                      <p className="text-sm">👤 Organiser: {experience.organiser.firstName + ' ' + experience.organiser.lastName}</p>
                     </div>
                   ))}
                 </div>
