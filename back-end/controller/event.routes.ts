@@ -102,7 +102,7 @@ const eventRouter = express.Router();
  */
 eventRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const events: any = [];
+        const events= await eventService.getAllEvents();
         res.status(200).json(events);
     } catch (error) {
         next(error);
@@ -157,6 +157,14 @@ eventRouter.get(
     '/organiser/:organiserId',
     async (req: Request, res: Response, next: NextFunction) => {
         // Extract organiserId from request parameters
+        const organiserId = Number(req.params.organiserId);
+
+        try {
+            const events = await eventService.getEventsByOrganiserId({organiserId});
+            res.status(200).json(events);
+        } catch (error) {
+            next(error);
+        }
     }
 );
 
