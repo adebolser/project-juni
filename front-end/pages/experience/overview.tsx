@@ -61,9 +61,9 @@ const Experiences: React.FC = () => {
 
   useEffect(() => {
     if (loggedInUser) {
-      getExperiences();
+      showOnlyMine ? getMyExperiences() : getExperiences();
     }
-  }, [loggedInUser]);
+  }, [loggedInUser,showOnlyMine]);
   return (
     <>
       {" "}
@@ -102,7 +102,7 @@ const Experiences: React.FC = () => {
           {loggedInUser && loggedInUser.role === "ORGANISER" && (
             <div className="mt-4 mb-4 flex gap-3">
               <button
-                // onClick={}
+                onClick={() => setShowOnlyMine(!showOnlyMine)}
                 className="bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg text-sm px-5 py-2.5"
               >
                 {showOnlyMine ? "Show All Experiences" : "Show Only Mine"}
@@ -121,7 +121,7 @@ const Experiences: React.FC = () => {
             {experiences && (
               <div className="mt-4">
                 <h2 className="text-xl font-semibold mb-4">
-                  {"Available Experiences"} ({experiences.length})
+                  {showOnlyMine ? "My Experiences" : "Available Experiences"} ({experiences.length})
                 </h2>
                 <div className="grid gap-4">
                   {experiences.map((experience) => (
