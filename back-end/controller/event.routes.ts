@@ -64,6 +64,7 @@
  */
 import express, { NextFunction, Request, Response } from 'express';
 import eventService from '../service/event.service';
+import { ExperienceInput } from '../types';
 
 const eventRouter = express.Router();
 
@@ -229,7 +230,8 @@ eventRouter.post('/', async (req: Request, res: Response, next: NextFunction) =>
         const user = await userService.getUserByEmail({ email: auth.email });
 
         //create event here
-
+        const experienceInput = <ExperienceInput>req.body;
+        const event = await eventService.createEvent(experienceInput, user);
         res.status(201).json(event);
     } catch (error) {
         next(error);

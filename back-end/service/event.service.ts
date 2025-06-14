@@ -2,6 +2,7 @@ import eventDB from '../repository/event.db';
 import userDB from '../repository/user.db';
 import { Event } from '../model/event';
 import { User } from '../model/user';
+import { ExperienceInput, UserInput} from '../types';
 
 const getAllEvents = async (): Promise<Event[]> => eventDB.getAllEvents();
 
@@ -24,8 +25,30 @@ const getUpcomingEvents = async (): Promise<Event[]> => {
     return allEvents.filter((event) => event.getDate() > now);
 };
 
-const createEvent = ()=>{}
-
+const createEvent = async ({
+     name,
+     description,
+     date,
+     location,
+}: ExperienceInput, user:User): Promise<Event> => {
+ 
+    // only an organiser is allowed create a new event
+    if (!user.getIsOrganiser())
+    {
+        throw new Error(`The user with email=${user.getEmail()}, is not an organiser`);
+    }    
+    
+    // let the domain layer validate the properties input
+    const event = new Event({
+        name,
+        description,
+        date,
+        location,
+        organiser:user,
+        attendees:[],
+    });
+    return await eventDB.createEvent(event);
+}
 
 export default {
     getAllEvents,

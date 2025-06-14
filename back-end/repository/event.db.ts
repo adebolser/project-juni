@@ -53,7 +53,32 @@ const getEventsByOrganiserId = async ({
     }
 };
 
-const createEvent = () => {};
+const createEvent = async (event: Event) : Promise<Event> => {
+    try {
+        const eventPrisma = await database.event.create({
+            data: {
+                name: event.getName(),
+                description: event.getDescription(),
+                date: event.getDate(),
+                location: event.getLocation(),
+                organiser: {
+                    connect: { id: event.getOrganiser().getId() },
+                },
+                attendees: {
+                    connect: event.getAttendees().map((attendee)=> ({ id: attendee.getId() })),
+                },
+            },
+            include: {
+                organiser: true,
+                attendees: true,
+            },
+        });
+        return Event.from(eventPrisma);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
+}
 
 export default {
     getAllEvents,

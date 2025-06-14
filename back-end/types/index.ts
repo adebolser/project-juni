@@ -7,6 +7,14 @@ type UserInput = {
     isOrganiser: boolean;
 };
 
+type ExperienceInput = {
+    id?: number;
+    name: string;
+    description: string;
+    date: Date;
+    location: string;
+}
+
 type AuthenticationResponse = {
     token: string;
     id: number;
@@ -15,4 +23,4 @@ type AuthenticationResponse = {
     role: 'ORGANISER' | 'CLIENT';
 };
 
-export { UserInput, AuthenticationResponse };
+export { UserInput, ExperienceInput, AuthenticationResponse };

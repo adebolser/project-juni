@@ -3,8 +3,8 @@ import { User } from './user';
 
 export class Event {
     private id?: number;
-    private createdAt: Date;
-    private updatedAt: Date;
+    private createdAt?: Date;
+    private updatedAt?: Date;
     private name: string;
     private description: string;
     private date: Date;
@@ -14,8 +14,8 @@ export class Event {
 
     constructor(event: {
         id?: number;
-        createdAt: Date;
-        updatedAt: Date;
+        createdAt?: Date;
+        updatedAt?: Date;
         name: string;
         description: string;
         date: Date;
@@ -70,11 +70,11 @@ export class Event {
         return this.id;
     }
 
-    getCreatedAt(): Date {
+    getCreatedAt(): Date | undefined{
         return this.createdAt;
     }
 
-    getUpdatedAt(): Date {
+    getUpdatedAt(): Date | undefined{
         return this.updatedAt;
     }
 
