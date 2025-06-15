@@ -39,7 +39,6 @@ function isSameDay(date1: Date | string, date2: Date | string): boolean {
 }
 
 const getEventsByOrganiserIdOnDate = async ({ organiserId, date }: { organiserId: number; date: Date }): Promise<Event[]> => {
-    
     const allEvents = await eventDB.getEventsByOrganiserId({ organiserId });
     const eventsOnDate = allEvents.filter(event => isSameDay(event.getDate(), date));
     return eventsOnDate;
@@ -56,8 +55,12 @@ const createEvent = async ({
      description,
      date,
      location,
-}: ExperienceInput, user:User): Promise<Event> => {
- 
+}: ExperienceInput, userInput:UserInput): Promise<Event> => {
+
+    if (!userInput.id) throw new Error('User id is required');
+    const user = await userDB.getUserById({id: userInput.id});
+    if (!user) throw new Error(`The user with id=${userInput.id} was not found`);
+
     // only an organiser is allowed create a new event
     if (!user.getIsOrganiser())
     {
