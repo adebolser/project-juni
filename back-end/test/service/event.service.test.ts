@@ -104,6 +104,7 @@ test('Given minimal valid event values, when event is created, then event is cre
     //then
     expect(mockEventDbGetEventByOrganiserId).toHaveBeenCalledTimes(1);
     expect(mockEventDbCreateEvent).toHaveBeenCalledTimes(1);
+    expect(mockEventDbCreateEvent).toHaveBeenCalledWith(testEvent);
     expect(actualEvent.equals(testEvent)).toBeTruthy();
 });
 

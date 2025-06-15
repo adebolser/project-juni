@@ -13,11 +13,12 @@ test('given: valid values for User, when: user is created, then: user is created
     });
 
     // then
-    expect(actualUser.getFirstName() === 'Jan');
-    expect(actualUser.getLastName() === 'Janssen');
-    expect(actualUser.getEmail() === 'jan.janssens@ucll.be');
-    expect(actualUser.getPassword() === 'jan123');
-    expect(actualUser.getIsOrganiser() === false);
+    expect(actualUser.getFirstName()).toEqual('Jan');
+    expect(actualUser.getLastName()).toEqual('Janssen');
+    expect(actualUser.getEmail()).toEqual('jan.janssens@ucll.be');
+    expect(actualUser.getPassword()).toEqual('jan123');
+    expect(actualUser.getIsOrganiser()).toEqual(false);
+    expect(actualUser.getId()).toBeUndefined();
 });
 
 test('given: empty email for User, when: user is created, then: a "is required" error is reported', () => {
