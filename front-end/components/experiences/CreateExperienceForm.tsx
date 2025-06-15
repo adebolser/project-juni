@@ -52,7 +52,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
     const response = await ExperienceService.createExperience({
       name,
       description,
-      date,
+      date: new Date(date),
       location
     }); 
     
@@ -141,7 +141,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
             id="date"
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
             onChange={(event) => {
-                const newDate = event.target.value + ":00.00Z";
+                const newDate = event.target.value;
                 setDate(newDate);
                }}
           />
