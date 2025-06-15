@@ -12,6 +12,7 @@ const Experiences: React.FC = () => {
   const [experiences, setExperiences] = useState<Experience[]>();
   const [showOnlyMine, setShowOnlyMine] = useState<boolean>(false);
   const [showCreateForm, setShowCreateForm] = useState<boolean>(false);
+  const [experiencesCreated, setExperiencesCreated] = useState<number>(0);
 
   useEffect(() => {
     const loggedInUserString = sessionStorage.getItem("loggedInUser");
@@ -19,6 +20,7 @@ const Experiences: React.FC = () => {
       setLoggedInUser(JSON.parse(loggedInUserString));
     }
   }, []);
+
   const getExperiences = async () => {
     setError("");
 
@@ -63,7 +65,8 @@ const Experiences: React.FC = () => {
     if (loggedInUser) {
       showOnlyMine ? getMyExperiences() : getExperiences();
     }
-  }, [loggedInUser,showOnlyMine]);
+  }, [loggedInUser,showOnlyMine,experiencesCreated]);
+  
   return (
     <>
       {" "}
@@ -95,10 +98,14 @@ const Experiences: React.FC = () => {
 
         {/* Show content only for logged-in users */}
         <>
-          {/* <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                <CreateExperienceForm
-                  />
-              </div> */}
+          {/* showCreateForm can only be set to true by ORGANISER => no role check required */}
+          { showCreateForm && (<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                {< CreateExperienceForm 
+                  onSuccess={() => { console.log("New experience created"); setExperiencesCreated(experiencesCreated+1); setShowCreateForm(false)} } 
+                  onCancel={() => { console.log("Experience creation cancelled"); setShowCreateForm(false)} }                    
+                />}
+              </div> 
+          )}
           {loggedInUser && loggedInUser.role === "ORGANISER" && (
             <div className="mt-4 mb-4 flex gap-3">
               <button
