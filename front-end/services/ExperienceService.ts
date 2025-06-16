@@ -31,7 +31,7 @@ const getExperiencesByOrganiser = (organiserId: number) => {
 const createExperience = (experience: {
   name: string;
   description: string;
-  date: Date;
+  date: string;
   location: string;
 }) => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + "/events", {

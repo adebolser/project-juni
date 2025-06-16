@@ -11,7 +11,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
   // state var to keep track of input field updates 
   const [name, setName] = useState(""); 
   const [description, setDescription] = useState(""); 
-  const [date, setDate] = useState("");  
+  const [date, setDate] = useState<Date|null>(null);  
   const [location, setLocation] = useState("");
  
   const [statusMessage, setStatusMessage] = useState<StatusMessage>();
@@ -52,14 +52,14 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
     const response = await ExperienceService.createExperience({
       name,
       description,
-      date: new Date(date),
+      date: date!.toISOString(),
       location
     }); 
     
     if (response.status === 201) {
       setStatusMessage({message:"Experience created successfully", type:"success"});
  
-      // automatical redirecting the user to the project page (=previous page) after 2 sec
+      // automatic redirecting the user to the experiences overview page after 2 sec
       // the 2sec is to allow informing the user that the time registration was succesfull
       setTimeout(() => {
           onSuccess()  
@@ -141,7 +141,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
             id="date"
             className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
             onChange={(event) => {
-                const newDate = event.target.value;
+                const newDate = new Date(event.target.value);
                 setDate(newDate);
                }}
           />
