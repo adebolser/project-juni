@@ -71,7 +71,7 @@ const createEvent = async ({
     const existingEventsOnDate = await getEventsByOrganiserIdOnDate({organiserId: user.getId()!, date})
     if (existingEventsOnDate.length > 0)
     {
-        throw new Error(`There is alreay an event on the selected day for organiser ${user.getFullName()}`);
+        throw new Error(`There is already an event on the selected day for organiser ${user.getFullName()}`);
     }
     
     // let the domain layer validate the properties input
