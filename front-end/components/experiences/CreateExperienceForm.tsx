@@ -13,29 +13,45 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
   const [description, setDescription] = useState(""); 
   const [date, setDate] = useState<Date|null>(null);  
   const [location, setLocation] = useState("");
+
+  const [nameError, setNameError] = useState<string | null>(null);
+  const [descriptionError, setDescriptionError] = useState<string | null>(null);
+  const [dateError, setDateError] = useState<string | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
  
   const [statusMessage, setStatusMessage] = useState<StatusMessage>();
  
   const clearErrors = () => {
     setStatusMessage(undefined);
+    setNameError(null);
+    setDescriptionError(null);
+    setDateError(null);
+    setLocationError(null);
   };
 
   const validate = (): boolean => {
+    let result = true;
+
     if (!name || name.trim() === "") {
-        setStatusMessage({message:"Name is required", type:"error"});
-        return(false);
-    } else if (!description || description.trim() === "") {
-        setStatusMessage({message:"Description is required", type:"error"});
-        return(false);
-    } else if (!date) {
-        setStatusMessage({message:"Date is required", type:"error"});
-        return(false);
-    } else if (!location || location.trim() === "") {
-        setStatusMessage({message:"Location is required", type:"error"});
-        return(false);    
-    } else {
-        return true;
-    }
+        setNameError("Name is required");
+        result = false;
+    } 
+    
+    if (!description || description.trim() === "") {
+        setDescriptionError("Description is required");
+        result = false;
+    } 
+    
+    if (!date) {
+        setDateError("Date is required");
+        result = false;
+    } 
+    
+    if (!location || location.trim() === "") {
+        setLocationError("Location is required");
+        result = false;
+    }    
+    return result;
   }
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
@@ -107,6 +123,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
                 setName(newName);
                }}
           />
+          {nameError && <div className="text-red-800 ">{nameError}</div>}
         </div>
 
         <div>
@@ -127,6 +144,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
                 setDescription(newDescription);
                }}
           />
+          {descriptionError && <div className="text-red-800 ">{descriptionError}</div>}
         </div>
 
         <div>
@@ -145,6 +163,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
                 setDate(newDate);
                }}
           />
+          {dateError && <div className="text-red-800 ">{dateError}</div>}
         </div>
 
         <div>
@@ -165,6 +184,7 @@ const CreateExperienceForm: React.FC<Props> = ({ onSuccess, onCancel }) => {
                 setLocation(newLocation);
                }}
           />
+          {locationError && <div className="text-red-800 ">{locationError}</div>}
         </div>
 
         <div className="flex gap-3 pt-4">
