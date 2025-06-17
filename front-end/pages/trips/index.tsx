@@ -53,7 +53,7 @@ const Trips: React.FC = () => {
                     <p className="text-sm">👤 Organiser: {trip.organiser.firstName + ' ' + trip.organiser.lastName}</p>
                     <p className="text-sm mb-3">👥 Attendees: {trip.attendees.length} people</p>
                     <Link
-                      href={`/trips/${1}`}
+                      href={`/trips/${trip.id}`}
                       className="bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg text-sm px-4 py-2"
                     >
                       More Info
